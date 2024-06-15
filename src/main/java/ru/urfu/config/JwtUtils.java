@@ -1,32 +1,26 @@
-package ru.urfu.utils;
+package ru.urfu.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.time.Duration;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class JwtUtils {
 
-    @Value("${jwt.secret}")
-    private String secret;
-    private SecretKey secretKey;
+    private final SecretKey secretKey;
+    private final Duration jstLifetime;
 
-    @Value("${jwt.lifetime}")
-    private Duration jstLifetime;
-
-    @PostConstruct
-    private void initSecretKey(){
-        secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+    public JwtUtils(@Value("${jwt.secret}") String secret, @Value("${jwt.lifetime}") Duration jstLifetime) {
+        this.secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+        this.jstLifetime = jstLifetime;
     }
 
     public String generateToken(UserDetails user) {
