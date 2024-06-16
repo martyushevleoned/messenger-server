@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class ChatRoom {
+public class Chat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +24,12 @@ public class ChatRoom {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "users_chats",
-            joinColumns = @JoinColumn(name = "chat_room_id"),
+            joinColumns = @JoinColumn(name = "chat_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> members;
 
-    public ChatRoom() {
+    public Chat() {
     }
 
     public void setChatName(String chatName) {
@@ -40,12 +40,28 @@ public class ChatRoom {
         this.creator = creator;
     }
 
+    public void setMembers(Set<User> members) {
+        this.members = members;
+    }
+
+    public Instant getCreactionTime() {
+        return creactionTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getChatName() {
+        return chatName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ChatRoom chatRoom = (ChatRoom) o;
-        return Objects.equals(id, chatRoom.id);
+        Chat chat = (Chat) o;
+        return Objects.equals(id, chat.id);
     }
 
     @Override

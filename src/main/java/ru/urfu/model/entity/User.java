@@ -5,7 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,7 +31,7 @@ public class User implements UserDetails {
     private Set<Role> roles = Set.of(Role.USER);
 
     @ManyToMany(mappedBy = "members")
-    private Set<ChatRoom> chatRooms;
+    private Set<Chat> chats;
 
     public User() {
     }
