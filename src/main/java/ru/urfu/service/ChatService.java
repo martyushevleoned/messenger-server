@@ -11,6 +11,7 @@ import ru.urfu.model.repository.UserRepository;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -41,5 +42,13 @@ public class ChatService {
         return chatRepository.findAllChatsByUsername(principal.getName()).stream()
                 .sorted(Comparator.comparing(Chat::getCreactionTime))
                 .map(chat -> new ChatDto(chat.getId(), chat.getChatName())).toList();
+    }
+
+    public void deleteChat(Principal principal, Long chatId) {
+        Chat chat = chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("чат не найден"));
+        if (Objects.equals(chat.getCreator().getUsername(), principal.getName()))
+            chatRepository.deleteById(chatId);
+        else
+            throw new RuntimeException("недостаточно прав доступа");
     }
 }

@@ -56,6 +56,10 @@ public class Chat {
         return chatName;
     }
 
+    public User getCreator() {
+        return creator;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

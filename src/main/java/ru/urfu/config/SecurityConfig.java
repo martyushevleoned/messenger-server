@@ -51,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/userInfo").hasAuthority(Role.USER.getAuthority())
                         .requestMatchers(HttpMethod.PUT, "/createChat").hasAuthority(Role.USER.getAuthority())
                         .requestMatchers(HttpMethod.GET, "/getChats").hasAuthority(Role.USER.getAuthority())
+                        .requestMatchers(HttpMethod.PUT, "/deleteChat").hasAuthority(Role.USER.getAuthority())
                 )
                 .build();
     }

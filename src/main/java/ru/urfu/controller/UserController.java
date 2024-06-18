@@ -50,4 +50,14 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/deleteChat")
+    private ResponseEntity<?> deleteChat(Principal principal, @RequestBody Long chatId) {
+        try {
+            chatService.deleteChat(principal, chatId);
+            return ResponseEntity.ok("чат удалён");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
